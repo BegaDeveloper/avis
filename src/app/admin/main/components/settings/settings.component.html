@@ -1,0 +1,39 @@
+<ng-container *ngIf="params$ | async">
+  <div *ngFor="let param of params | keyvalue : onCompare" class="param-group">
+    <mat-slide-toggle
+      *ngIf="paramType.BOOLEAN === param.value.code.paramType"
+      color="primary"
+      [(ngModel)]="param.value.booleanValue"
+      (change)="save(param.value)"
+    >
+      {{ param.value.code.name }}
+    </mat-slide-toggle>
+    <ng-container
+      *ngIf="paramType.NUMBER === param.value.code.paramType || paramType.STRING === param.value.code.paramType"
+    >
+      <mat-label class="label">{{ param.value.code.name }}</mat-label>
+      <mat-form-field appearance="outline" floatLabel="auto">
+        <input
+          *ngIf="paramType.NUMBER === param.value.code.paramType"
+          matInput
+          [(ngModel)]="param.value.numberValue"
+          (input)="onInputValueChange(param.value, resetBtn, saveBtn)"
+          name="{{param.key}}"
+        />
+        <input
+          *ngIf="paramType.STRING === param.value.code.paramType"
+          matInput
+          [(ngModel)]="param.value.stringValue"
+          (input)="onInputValueChange(param.value, resetBtn, saveBtn)"
+          name="{{param.key}}"
+        />
+      </mat-form-field>
+      <button #resetBtn mat-raised-button class="reset" (click)="reset(param.value, resetBtn, saveBtn)" disabled>
+        Reset
+      </button>
+      <button #saveBtn mat-raised-button color="primary" (click)="save(param.value, resetBtn, saveBtn)" disabled>
+        Snimi
+      </button>
+    </ng-container>
+  </div>
+</ng-container>

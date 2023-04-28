@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{ 'Dodaj kolosek za stanicu ' }} {{ data.name }}</h1>
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-lg-4">
+      <!--    FIRST ROW OF CHECKBOXES-->
+      <div class="ten-chechboxes-group">
+        <div *ngFor="let cba of checkBoxArray" class="inpt-div">
+          <mat-checkbox
+            [checked]="cba[0]"
+            [value]="cba[0] ? cba[0].toString() : ''"
+            (change)="onChecked($event, cba[1])"
+            class="checkbox-special-day"
+            color="primary"
+          >
+            Kolosek {{ cba[1] }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <!--    SECOND ROW OF CHECKBOXES-->
+      <div class="ten-chechboxes-group">
+        <div *ngFor="let cba of checkBoxArray2" class="inpt-div">
+          <mat-checkbox
+            [checked]="cba[0]"
+            [value]="cba[0] ? cba[0].toString() : ''"
+            (change)="onChecked($event, cba[1])"
+            class="checkbox-special-day"
+            color="primary"
+          >
+            Kolosek {{ cba[1] }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <!--    THIRD ROW OF CHECKBOXES-->
+      <div class="ten-chechboxes-group">
+        <div *ngFor="let cba of checkBoxArray3" class="inpt-div">
+          <mat-checkbox
+            [checked]="cba[0]"
+            [value]="cba[0] ? cba[0].toString() : ''"
+            (change)="onChecked($event, cba[1])"
+            class="checkbox-special-day"
+            color="primary"
+          >
+            Kolosek {{ cba[1] }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="closeModal()" type="button">Otkaži</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()">Snimi</button>
+</mat-dialog-actions>

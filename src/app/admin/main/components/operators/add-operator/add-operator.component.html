@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Dodavanje novog operatora</h1>
+<hr />
+<form [formGroup]="form">
+  <mat-dialog-content>
+    <mat-form-field class="w-100 name-field" appearance="outline">
+      <mat-label class="label-mat">Ime:</mat-label>
+      <input matInput appTrim formControlName="name" [errorStateMatcher]="matcher" />
+    </mat-form-field>
+    <mat-error *ngIf="sharedService.validationMessage('name', form, isFormSubmitted)">
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+    <div>
+      <div>
+        <label>Odaberi logo</label>
+      </div>
+      <input type="file" accept="image/*" (change)="onLogoSelected($event)" #logo />
+    </div>
+    <div>
+      <div class="mt-3">
+        <label>Odaberi mali logo</label>
+      </div>
+      <input type="file" accept="image/*" (change)="onSmallLogoSelected($event)" #smallLogo />
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="closeModal()">Otkaži</button>
+
+    <button mat-flat-button color="primary" [disabled]="isFormSubmitted" (click)="submit()">
+      <img *ngIf="isFormSubmitted" class="spinner-button" src="/assets/img/spinner.gif" alt="spinner" />
+      Snimi
+    </button>
+  </mat-dialog-actions>
+</form>

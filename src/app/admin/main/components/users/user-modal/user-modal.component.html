@@ -1,0 +1,100 @@
+<h1 mat-dialog-title>{{ data ? 'Izmeni korisnika' : 'Dodaj korisnika' }}</h1>
+<form [formGroup]="userModalForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Korisničko ime:</mat-label>
+      <input matInput appTrim formControlName="username" [errorStateMatcher]="matcher" />
+    </mat-form-field>
+    <mat-error *ngIf="sharedService.validationMessage('username', userModalForm, isFormSubmitted)" name="username">
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Puno ime:</mat-label>
+      <input matInput appTrim formControlName="fullName" [errorStateMatcher]="matcher" />
+    </mat-form-field>
+    <mat-error *ngIf="sharedService.validationMessage('fullName', userModalForm, isFormSubmitted)" name="fullName">
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Lozinka:</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        appTrim
+        formControlName="password"
+        [errorStateMatcher]="matcher"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide Password'"
+        [attr.aria-pressed]="hide"
+      >
+        <img
+          class="vis"
+          [src]="hide ? '../../../../../assets/icons/vis.svg' : '../../../../../assets/icons/vis_off.svg'"
+          alt=""
+        />
+      </button>
+    </mat-form-field>
+    <mat-error
+      *ngIf="sharedService.validationMessage('password', userModalForm, isFormSubmitted) && !this.isEdit"
+      name="password"
+    >
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Lozinka (Unesite ponovo):</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        appTrim
+        formControlName="passwordRepeat"
+        [errorStateMatcher]="matcher"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide Password'"
+        [attr.aria-pressed]="hide"
+      >
+        <img
+          class="vis"
+          [src]="hide ? '../../../../../assets/icons/vis.svg' : '../../../../../assets/icons/vis_off.svg'"
+          alt=""
+        />
+      </button>
+    </mat-form-field>
+    <mat-error
+      *ngIf="sharedService.validationMessage('passwordRepeat', userModalForm, isFormSubmitted) && !this.isEdit"
+      name="passwordRepeat"
+    >
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <div class="mb-3">
+      <mat-checkbox
+        [checked]="enabled"
+        [value]="enabled"
+        class="checkbox second-div"
+        color="primary"
+        formControlName="enabled"
+        id="check-box"
+        >Aktivan
+      </mat-checkbox>
+      <mat-error *ngIf="sharedService.validationMessage('enabled', userModalForm, isFormSubmitted)" name="enabled">
+        <strong>{{ 'required' | translate }}</strong>
+      </mat-error>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="this.getDisabled()">Snimi</button>
+  </mat-dialog-actions>
+</form>

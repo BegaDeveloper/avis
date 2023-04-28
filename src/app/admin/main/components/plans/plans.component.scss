@@ -1,0 +1,76 @@
+.checkbox-active {
+  pointer-events: none;
+}
+
+.activation-plan {
+  position: fixed;
+  top: 63px;
+  right: 20px;
+  display: flex;
+  padding: 7px 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background: #3f51b5;
+  width: 245px;
+  color: white;
+  .x-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .txt-div {
+    display: flex;
+    .txt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      p {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
+  .spin {
+    margin-right: 4px;
+  }
+}
+
+.form-label {
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #3f51b5;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.upload-icon {
+  vertical-align: middle;
+}
+
+.cell-size-actions {
+  width: 270px;
+  text-align: center;
+}
+
+.cell-active {
+  width: 96px;
+}
+
+.btn-upload-plan {
+  margin-right: 1rem;
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
+}
+
+#train_id {
+  min-width: 80px;
+}
+
+#active_id {
+  min-width: 105px;
+}

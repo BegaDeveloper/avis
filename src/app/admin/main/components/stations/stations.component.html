@@ -1,0 +1,121 @@
+<div class="main-div">
+  <h1 class="main-header-text">Stanice</h1>
+
+  <!---Table--->
+  <div class="mat-elevation-z8">
+    <div class="flex table-top-area">
+      <div>
+        <app-search></app-search>
+      </div>
+      <div class="add-station-div">
+        <button mat-raised-button color="primary" (click)="openDialog()">
+          <img src="/assets/icons/add.svg" class="icons" alt="" />
+          Kreiraj stanicu
+        </button>
+      </div>
+    </div>
+    <table class="mt-0 table-style" mat-table [dataSource]="data" matSort>
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="id" id="station_id">
+          ID
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="STATIONTYPE">
+        <th mat-header-cell *matHeaderCellDef>TIP STANICE</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.stationType == 'STATION' ? 'Stanica' : element.stationType == 'STOP' ? 'Stajalište' : '' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NAZIV STANICE">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="name" id="station_name">
+          NAZIV STANICE
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="LICENCA">
+        <th mat-header-cell *matHeaderCellDef>LICENCA</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox color="primary" class="checkbox" [checked]="element.licensed"> </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="EXTERNI ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="externalId" id="external_id">
+          EKSTERNI ID
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.externalId }}</td>
+      </ng-container>
+      <ng-container matColumnDef="AKCIJA">
+        <th mat-header-cell *matHeaderCellDef class="text-center p-0">AKCIJA</th>
+        <td mat-cell *matCellDef="let element" class="cell-size-actions">
+          <div class="cell-actions">
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/edit.svg"
+                class="icons"
+                alt=""
+                matTooltip="Ažuriraj"
+                [matTooltipPosition]="'above'"
+                (click)="getById(element.id)"
+              />
+            </button>
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/directions_railway.svg"
+                class="icons"
+                alt=""
+                matTooltip="Kolosek"
+                [matTooltipPosition]="'above'"
+                (click)="addTrack(element.id, element.name)"
+              />
+            </button>
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/account_balance.svg"
+                class="icons"
+                alt=""
+                matTooltip="Susedna stanica"
+                [matTooltipPosition]="'above'"
+                (click)="addSubsequentStation(element.id, element.name)"
+              />
+            </button>
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/meeting_room.svg"
+                class="icons"
+                alt=""
+                matTooltip="Prostorija"
+                [matTooltipPosition]="'above'"
+                (click)="addStationPremises(element.id, element.name)"
+              />
+            </button>
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/delete.svg"
+                class="icons"
+                alt=""
+                matTooltip="Obriši"
+                [matTooltipPosition]="'above'"
+                (click)="deleteDialog(element)"
+              />
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="paginator">
+      <mat-paginator
+        [length]="total"
+        [pageSize]="10"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

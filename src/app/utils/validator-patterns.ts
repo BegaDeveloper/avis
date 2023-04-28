@@ -1,0 +1,5 @@
+export const VALIDATOR_PATTERNS = {
+  ONLY_INTEGER_VALUES: '^(0|[1-9][0-9]*)$',
+  ONLY_INTEGER_VALUES_DOT_ALLOWED: '^(0|[1-9][0-9]*)\\.?$',
+  MORE_THAN_ONE_WHITE_SPACE: '/^s{2,}',
+};

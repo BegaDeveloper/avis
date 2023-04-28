@@ -1,0 +1,99 @@
+<div class="main-div">
+  <h1>Generisanje korisničkih poruka</h1>
+  <hr />
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="dropdowns-div">
+      <div class="stations">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Stanica:</mat-label>
+          <mat-select formControlName="stationId" matTooltipClass="planModalTooltip" [disabled]="getDisabled()">
+            <mat-option *ngFor="let station of stations$ | async" [value]="station.id">{{ station.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="tracks">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Kolosek:</mat-label>
+          <mat-select
+            #tracks
+            formControlName="tracks"
+            multiple
+            matTooltipClass="planModalTooltip"
+            [disabled]="getDisabled()"
+          >
+            <mat-option *ngFor="let track of tracks$ | async" [value]="track.trackNumber">{{
+              track.trackNumber
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="premisess">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Stanične prostorije:</mat-label>
+          <mat-select
+            #premises
+            formControlName="premiseIds"
+            multiple
+            matTooltipClass="planModalTooltip"
+            [disabled]="getDisabled() || (premises$ | async)?.length === 0"
+          >
+            <mat-option *ngFor="let premise of premises$ | async" [value]="premise.id">{{ premise.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="text-area">
+        <mat-form-field class="textarea" appearance="outline">
+          <mat-label>Poruka</mat-label>
+          <textarea
+            matInput
+            formControlName="messageText"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="9"
+            cdkAutosizeMaxRows="9"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <div class="date-div">
+          <mat-form-field>
+            <input
+              matInput
+              [ngxMatDatetimePicker]="picker"
+              placeholder="Datum i vreme"
+              [formControl]="dateTimeControl"
+              [min]="minDate"
+              [max]="maxDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker
+              #picker
+              [showSpinners]="showSpinners"
+              [showSeconds]="showSeconds"
+              [stepHour]="stepHour"
+              [stepMinute]="stepMinute"
+              [stepSecond]="stepSecond"
+              [touchUi]="touchUi"
+              [color]="color"
+              [enableMeridian]="enableMeridian"
+            ></ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+        <div class="immediately-checkbox m-3">
+          <mat-checkbox [checked]="checkboxChecked" (change)="onChange($event)" color="primary"> Odmah </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="submit-div">
+      <button
+        [disabled]="getDisabled() || !form.get('messageText')!.value || form.get('tracks')!.value.length === 0"
+        mat-flat-button
+        color="primary"
+        type="submit"
+      >
+        <img *ngIf="getDisabled()" class="spinner-button" src="/assets/img/spinner.gif" alt="spinner" />
+        Generiši audio poruku
+      </button>
+    </div>
+  </form>
+</div>

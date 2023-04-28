@@ -1,0 +1,317 @@
+.arrival {
+  height: 100%;
+  background: #000000;
+  header {
+    .flex-div {
+      font-family: Arial;
+      display: flex;
+      justify-content: space-between;
+      padding: 50px 0 0 0;
+      .name {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        .station-n {
+          margin: 20px 0;
+          color: white;
+          font-size: 30px;
+        }
+        .yellow-letters {
+          color: #ffbb03;
+          font-size: 50px;
+        }
+        .white-letters {
+          color: #ffffff;
+          font-size: 50px;
+        }
+      }
+      .time {
+        span {
+          color: #ffbb03;
+          font-size: 100px;
+        }
+      }
+      .date {
+        span {
+          color: #ffbb03;
+          font-size: 50px;
+        }
+      }
+    }
+  }
+
+  .table {
+    margin-right: 20px;
+    thead {
+      border-bottom: 1px;
+      tr {
+        .table-name {
+          font-weight: 400;
+          width: 140px;
+          text-align: center;
+          .y {
+            color: #ffbb03;
+          }
+          .w {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    tbody {
+      .even {
+        background: #373737;
+      }
+      tr {
+        th,
+        td {
+          border-top: 1px solid black;
+          border-bottom: 1px solid black;
+        }
+        .image-th {
+          width: 70px;
+          img {
+            width: 36px;
+            margin-left: 12px;
+          }
+        }
+        .yupit-td {
+          width: 60px;
+          .yupit-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .yupit-font {
+              font-family: Yupic;
+              font-size: 38px;
+              color: #ffbb03;
+              margin-top: 8px;
+              p {
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+        .planId-td {
+          width: 90px;
+          .planId {
+            p {
+              font-size: 35px;
+              margin-top: 8px;
+            }
+          }
+        }
+        .route-td {
+          text-align: center;
+          p {
+            color: #ffbb03;
+            font-size: 32px;
+            margin-top: 8px;
+            margin-bottom: 0;
+          }
+        }
+        .time-td {
+          color: #ffbb03;
+          margin-top: 5px;
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+          }
+        }
+        .track-td {
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+            color: #ffbb03;
+          }
+        }
+        .delay-td {
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+            color: #ffbb03;
+          }
+        }
+        .shortNotification-td {
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+            color: #ffbb03;
+          }
+        }
+        .y-text {
+          color: #ffbb03;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.departure {
+  height: 100%;
+  background: #0c0f76;
+  header {
+    .flex-div {
+      font-family: Arial;
+      display: flex;
+      justify-content: space-between;
+      padding: 50px 0 0 0;
+      .name {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        .station-n {
+          margin: 20px 0;
+          color: white;
+          font-size: 30px;
+        }
+        .yellow-letters {
+          color: #ffbb03;
+          font-size: 50px;
+        }
+        .white-letters {
+          color: #ffffff;
+          font-size: 50px;
+        }
+      }
+      .time {
+        span {
+          color: #ffbb03;
+          font-size: 100px;
+        }
+      }
+      .date {
+        span {
+          color: #ffbb03;
+          font-size: 50px;
+        }
+      }
+    }
+  }
+
+  .table {
+    margin-right: 20px;
+    thead {
+      border-bottom: 1px;
+      tr {
+        .table-name {
+          font-weight: 400;
+          width: 140px;
+          text-align: center;
+          .y {
+            color: #ffbb03;
+          }
+          .w {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    tbody {
+      .even {
+        background: #2d318a;
+      }
+      tr {
+        th,
+        td {
+          border-top: 1px solid black;
+          border-bottom: 1px solid black;
+        }
+        .image-th {
+          width: 70px;
+          img {
+            width: 36px;
+            margin-left: 12px;
+          }
+        }
+        .yupit-td {
+          width: 60px;
+          .yupit-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .yupit-font {
+              font-family: Yupic;
+              font-size: 38px;
+              color: #ffbb03;
+              margin-top: 8px;
+              p {
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+        .planId-td {
+          width: 90px;
+          .planId {
+            p {
+              font-size: 35px;
+              margin-top: 8px;
+            }
+          }
+        }
+        .route-td {
+          text-align: center;
+          p {
+            color: #ffbb03;
+            font-size: 32px;
+            margin-top: 8px;
+            margin-bottom: 0;
+          }
+        }
+        .time-td {
+          color: #ffbb03;
+          margin-top: 5px;
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+          }
+        }
+
+        .track-td {
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+            color: #ffbb03;
+          }
+        }
+        .delay-td {
+          p {
+            font-size: 35px;
+            margin-top: 8px;
+            text-align: center;
+            color: #ffbb03;
+          }
+        }
+        .y-text {
+          color: #ffbb03;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.socket-status-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.green {
+  background: #00c700;
+}
+
+.red {
+  background: red;
+}

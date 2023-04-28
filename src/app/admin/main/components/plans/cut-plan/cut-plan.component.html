@@ -1,0 +1,36 @@
+<form [formGroup]="cutForm">
+  <h1 mat-dialog-title>Ograničenje plana</h1>
+  <mat-dialog-content>
+    <div><strong>Plan ID:</strong> {{ data.data.id }}</div>
+    <div><strong>Interval plana:</strong> {{ data.data.planInterval.name }}</div>
+    <div><strong>Naziv rute:</strong> {{ data.data.route.name }}</div>
+    <div><strong>Nedeljni raspored:</strong> {{ data.data.weekSchedule.name }}</div>
+    <div><strong>Voz ID:</strong> {{ data.data.trainId }}</div>
+    <br />
+    <div>
+      <p>** Važenje plana ne uključuje izabrani datum. Poslednji dan važenja plana je dan pre izabranog datuma.</p>
+    </div>
+    <br />
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Datum ograničenja</mat-label>
+      <input
+        name="start_time"
+        matInput
+        [matDatepicker]="picker"
+        formControlName="date"
+        [min]="minDate"
+        [max]="maxDate"
+        #pickerInput
+      />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error id="error" *ngIf="!cutForm.valid">{{ getErrorMessage(pickerInput.value) }}</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="closeModal()" type="button">Otkaži</button>
+    <button mat-flat-button color="primary" cdkFocusInitial (click)="cut()" [disabled]="!cutForm.valid">
+      Ograniči
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,191 @@
+<div class="main-div">
+  <h1 class="main-header-text">Realizacije</h1>
+  <!---Table--->
+  <div class="mat-elevation-z8">
+    <div class="flex table-top-area">
+      <div>
+        <mat-form-field appearance="outline" class="bottom-0">
+          <mat-label class="label-mat">Izaberite stanicu:</mat-label>
+          <mat-select
+            [compareWith]="compareStations"
+            [(value)]="selectedStation"
+            (selectionChange)="storeSelectedStation()"
+          >
+            <mat-option *ngFor="let station of stations$ | async" [value]="station"> {{ station.name }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox color="primary" [disabled]="!!!selectedStation?.id">Prikaži sve statuse</mat-checkbox>
+      </div>
+      <div class="refresh-div">
+        <button mat-flat-button color="primary" cdkFocusInitial (click)="loadData()">
+          <img src="/assets/icons/refresh.svg" alt="" /> Osveži
+        </button>
+      </div>
+      <div>
+        <app-search></app-search>
+      </div>
+    </div>
+    <table class="table-style" mat-table [dataSource]="data">
+      <ng-container matColumnDef="ID" class="id-width">
+        <th mat-header-cell *matHeaderCellDef>ID INSTANCE</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.planInstanceItem.planInstanceId }}<br />{{ element.planInstanceItem.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="OPERATOR">
+        <th mat-header-cell *matHeaderCellDef>OPERATOR</th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="url + '/operators/' + element.train.operator.id + '/small-logo'" class="logo" alt="logo" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CATEGORY">
+        <th mat-header-cell *matHeaderCellDef>KATEGORIJA</th>
+        <td mat-cell *matCellDef="let element" class="train-category">{{ element.train.trainCategory.code }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="TRAIN">
+        <th mat-header-cell *matHeaderCellDef>VOZ</th>
+        <td mat-cell *matCellDef="let element">{{ element.train.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="TRANZIT">
+        <th mat-header-cell *matHeaderCellDef>TRANZIT</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="check-div">
+            <mat-checkbox
+              color="primary"
+              class="checkbox-transit"
+              [checked]="element.planInstanceItem.transit"
+            ></mat-checkbox>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ROUTE">
+        <th mat-header-cell *matHeaderCellDef>RUTA</th>
+        <td mat-cell *matCellDef="let element">{{ element.routeHeader.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="KOLOSEK">
+        <th mat-header-cell *matHeaderCellDef>KOLOSEK</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container
+            *ngIf="
+              !element.realizationItem.track || element.planInstanceItem.track === element.realizationItem.track;
+              else differentTrack
+            "
+          >
+            {{ element.planInstanceItem.track }}</ng-container
+          >
+          <ng-template #differentTrack>{{
+            element.planInstanceItem.track + ' -> ' + element.realizationItem.track
+          }}</ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TIME_ARRIVAL">
+        <th mat-header-cell *matHeaderCellDef>PLANIRANO<br />VREME<br />DOLASKA</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.planInstanceItem.planTimeArrival | date : 'HH:mm' }}
+          <br />
+          {{ element.planInstanceItem.planTimeArrival | date : 'dd.MM.yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TIME_DEPARTURE">
+        <th mat-header-cell *matHeaderCellDef>PLANIRANO<br />VREME<br />POLASKA</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.planInstanceItem.planTimeDeparture | date : 'HH:mm' }}
+          <br />
+          {{ element.planInstanceItem.planTimeDeparture | date : 'dd.MM.yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ARRIVAL_DELAY">
+        <th mat-header-cell *matHeaderCellDef>KAŠNJENJE U DOLASKU</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.realizationItem?.arrivalDelay }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="DEPARTURE_DELAY">
+        <th mat-header-cell *matHeaderCellDef>KAŠNJENJE U POLASKU</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.realizationItem?.departureDelay }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="STATUS">
+        <th mat-header-cell *matHeaderCellDef>STATUS</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.realizationItem ? element.description : 'Nema informacija' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ACTION_STATUS">
+        <th mat-header-cell *matHeaderCellDef>STATUS<br />AKCIJE</th>
+        <td mat-cell class="text-center" *matCellDef="let element">
+          <ng-container [ngSwitch]="element.actionStatus">
+            <mat-icon
+              color="primary"
+              matTooltip="Potrebna akcija"
+              matTooltipPosition="above"
+              *ngSwitchCase="actionStatus.ACTION_NEEDED"
+            >
+              warning_amber
+            </mat-icon>
+            <mat-icon
+              color="primary"
+              matTooltip="Akcija izvršena"
+              matTooltipPosition="above"
+              *ngSwitchCase="actionStatus.ACTION_DONE"
+            >
+              check_circle_outline
+            </mat-icon>
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ACTIONS">
+        <th mat-header-cell *matHeaderCellDef>AKCIJE</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="cell-actions">
+            <button mat-icon-button color="primary" (click)="openDetail(element.planInstanceItem.planInstanceId)">
+              <img
+                src="/assets/icons/details.svg"
+                matTooltip="Detalji realizacije"
+                [matTooltipPosition]="'above'"
+                class="icons"
+                alt=""
+              />
+            </button>
+            <ng-container *ngFor="let action of element.actions">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="openActionDialog(action, element.planInstanceItem.planInstanceId)"
+              >
+                <img
+                  [src]="iconPaths[action]"
+                  [matTooltip]="getTranslation(action)"
+                  [matTooltipPosition]="'above'"
+                  class="icons"
+                  alt=""
+                />
+              </button>
+            </ng-container>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="paginator">
+      <mat-paginator [length]="total" [pageSize]="pageSize" [hidePageSize]="true" [showFirstLastButtons]="true">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.navbar {
+  background-color: #375172;
+  // background: linear-gradient(90deg, rgba(74,132,189,1) 0%, rgba(31,65,113,1) 100%);
+  // border-bottom: 4px solid rgba(74,132,189,1);
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .navbar-brand {
+    margin-left: 15px;
+    cursor: pointer;
+    .menu-icon {
+      color: #ffffff;
+    }
+  }
+  .job-icon {
+    color: white;
+    font-size: 30px;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  .menu-div {
+    display: flex;
+    color: #ffffff;
+    align-items: center;
+    margin-right: 30px;
+    cursor: pointer;
+    .span-div {
+      display: flex;
+      align-items: center;
+    }
+
+    .divide {
+      margin-right: 15px;
+      font-size: 20px;
+    }
+  }
+}
+#construction {
+  margin-right: 10px;
+}
+
+::ng-deep button.mat-menu-item {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}

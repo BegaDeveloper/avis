@@ -1,0 +1,23 @@
+<ng-container *ngIf="planInstance$ | async as actionHeaderData">
+  <h2 mat-dialog-title>{{ name }}</h2>
+  <ul>
+    <ng-container *ngIf="!type; else typeSet">
+      <li>ID plan instance: {{ actionHeaderData.id }}</li>
+      <li>Kategorija voza: {{ actionHeaderData.train.trainCategory.name }}</li>
+      <li>Broj voza: {{ actionHeaderData.train.id }}</li>
+      <li>Naziv rute: {{ actionHeaderData.routeHeader.name }}</li>
+    </ng-container>
+    <ng-template #typeSet>
+      <li>Broj voza: {{ actionHeaderData.train.id }}</li>
+      <li>Naziv rute: {{ actionHeaderData.routeHeader.name }}</li>
+      <li *ngIf="stationData">
+        {{ arrival ? 'Planirano vreme dolaska: ' : 'Planirano vreme polaska' }}
+        {{
+          arrival
+            ? (stationData.planTimeArrival | date: 'dd.MM.yyyy HH:mm')
+            : (stationData.planTimeDeparture | date: 'dd.MM.yyyy HH:mm')
+        }}
+      </li>
+    </ng-template>
+  </ul>
+</ng-container>

@@ -1,0 +1,205 @@
+<h1 mat-dialog-title>{{ data?.id ? 'Izmena plana ' + data?.id + '' : 'Dodaj novi plan' }}</h1>
+<div>
+  <form [formGroup]="addPlanForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Interval plana:</mat-label>
+          <mat-select
+            formControlName="planIntervalId"
+            (selectionChange)="changeIntervalTooltip($event)"
+            matTooltip="{{ intervalPlanName }}"
+            matTooltipClass="planModalTooltip"
+            [errorStateMatcher]="matcher"
+            [disabled]="getDisabled()"
+          >
+            <mat-option *ngFor="let interval of intervalPlan$ | async" [value]="interval.id">
+              {{ interval.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('planIntervalId', addPlanForm, isFormSubmitted)" name="planIntervalId">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Nedeljni raspored:</mat-label>
+          <mat-select
+            panelClass="weeklyMatSelectPanel"
+            formControlName="weekScheduleId"
+            (selectionChange)="changeWeeklyTooltip($event)"
+            matTooltip="{{ weekScheduleName }}"
+            matTooltipClass="planModalTooltip"
+            [errorStateMatcher]="matcher"
+            [disabled]="getDisabled()"
+          >
+            <mat-option *ngFor="let week of weekly$ | async" [value]="week.id">
+              {{ week.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Ruta:</mat-label>
+          <mat-select
+            panelClass="routeMatSelectPanel"
+            formControlName="routeId"
+            (selectionChange)="changeRouteTooltip($event)"
+            matTooltip="{{ routeName }}"
+            matTooltipClass="planModalTooltip"
+            [errorStateMatcher]="matcher"
+            [disabled]="getDisabled()"
+          >
+            <mat-option (click)="routeClick(route)" *ngFor="let route of routes$ | async" [value]="route.id" >
+              {{ route.name }} ({{ route.id }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('routeId', addPlanForm, isFormSubmitted)" name="routeId">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Voz:</mat-label>
+          <mat-select formControlName="trainId" [errorStateMatcher]="matcher" [disabled]="getDisabled()">
+            <mat-option *ngFor="let train of trains$ | async" [value]="train.id">
+              {{ train.id }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('trainId', addPlanForm, isFormSubmitted)" name="trainId">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+    </div>
+    <mat-dialog-content formArrayName="planItems">
+      <table mat-table [dataSource]="_routeItems.getValue()" class="border mt-0 mb-3 table-style">
+        <div>
+          <!-- STANICE -->
+          <ng-container matColumnDef="STANICE">
+            <th mat-header-cell *matHeaderCellDef>STANICE</th>
+            <td mat-cell *matCellDef="let element; index as i" [formGroupName]="i">
+              <input class="station-inpt" type="text" formControlName="stationId" [hidden]="true" />
+              {{ element.stationName }}
+            </td>
+          </ng-container>
+
+          <!-- VREME DOLASKA -->
+          <ng-container matColumnDef="VREME_DOLASKA">
+            <th class="cell-time" mat-header-cell *matHeaderCellDef>VREME DOLASKA</th>
+            <td mat-cell *matCellDef="let element; index as i" [formGroupName]="i">
+              <div formGroupName="timeArrival" class="flex align-items-center" [hidden]="firstHidden(i)">
+                <div>
+                  <input
+                    (ngModelChange)="onClone(i)"
+                    type="text"
+                    class="num-div num-1"
+                    placeholder="DD"
+                    formControlName="day"
+                    style="width: 60px"
+                    (keydown)="oneAndZeroValueOnly($event)"
+                    max="1"
+                    min="0"
+                    pattern="\d*"
+                    maxlength="1"
+                  />
+                </div>
+                <div>
+                  <input
+                    (change)="onClone(i)"
+                    type="time"
+                    timeformat="24h"
+                    class="num-clock num-2"
+                    placeholder="HH:MM"
+                    formControlName="time"
+                    min="00:00"
+                    max="23:59"
+                    appFormatTime
+                  />
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- VREME ODLASKA -->
+          <ng-container matColumnDef="VREME_ODLASKA">
+            <th class="cell-time" mat-header-cell *matHeaderCellDef>VREME ODLASKA</th>
+            <td mat-cell *matCellDef="let element; index as i" [formGroupName]="i">
+              <div
+                class="flex align-items-center"
+                formGroupName="timeDeparture"
+                *ngIf="lastInArray.stationId !== element.stationId"
+              >
+                <div>
+                  <input
+                    (ngModelChange)="secondClone(i)"
+                    (keydown)="oneAndZeroValueOnly($event)"
+                    type="text"
+                    class="num-div num-1"
+                    formControlName="day"
+                    placeholder="DD"
+                    style="width: 60px"
+                    max="1"
+                    min="0"
+                    pattern="\d*"
+                    maxlength="1"
+                  />
+                </div>
+                <div>
+                  <input
+                    (ngModelChange)="secondClone(i)"
+                    type="time"
+                    class="num-clock num-2"
+                    formControlName="time"
+                    placeholder="HH:MM"
+                    timeformat="24h"
+                    min="00:00"
+                    max="23:59"
+                    appFormatTime
+                  />
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- TRANZIT -->
+          <ng-container matColumnDef="TRANZIT">
+            <th class="text-center" mat-header-cell *matHeaderCellDef>TRANSIT</th>
+            <td class="text-center" mat-cell *matCellDef="let element; index as i" [formGroupName]="i">
+              <div *ngIf="lastInArray.stationId !== element.stationId" [hidden]="firstHidden(i)">
+                <mat-checkbox color="primary" (change)="onClone(i)" formControlName="transit"></mat-checkbox>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- KOLOSEK -->
+          <ng-container matColumnDef="KOLOSEK">
+            <th class="text-center p-0" mat-header-cell *matHeaderCellDef>KOLOSEK</th>
+            <td class="text-center p-0" mat-cell *matCellDef="let element; index as i" [formGroupName]="i">
+              <input
+                type="number"
+                class="kolosek"
+                formControlName="track"
+                min="1"
+                (keydown)="negativeValuesRestrict($event)"
+                id="num"
+              />
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </div>
+      </table>
+    </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button type = "button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary"  [disabled]="getDisabled()"  type="submit">
+      <img *ngIf="getDisabled()" class = "spinner-button" src="/assets/img/spinner.gif" alt="spinner" />
+      Snimi</button>
+</mat-dialog-actions>
+</form>
+</div>

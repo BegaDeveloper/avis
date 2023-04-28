@@ -1,0 +1,37 @@
+<app-action-dialog
+  [template]="content"
+  [title]="'Skraćivanje rute'"
+  [submitTitle]="'Snimi'"
+  [disabled]="disabled"
+  (submitted)="onSubmit()"
+  [planInstanceId]="data.id"
+></app-action-dialog>
+<ng-template #content>
+  <form [formGroup]="form">
+    <div class="station-1">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label class="label-mat">Početna stanica:</mat-label>
+        <mat-select
+          formControlName="startRoute"
+          (selectionChange)="selectStation($event)"
+          [errorStateMatcher]="matcher"
+          [disabled]="disabled"
+        >
+          <mat-option *ngFor="let station of stations$ | async" [value]="station?.id">
+            {{ station.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="station-2">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label class="label-mat">Krajnja stanica:</mat-label>
+        <mat-select formControlName="endRoute" [errorStateMatcher]="matcher" [disabled]="disabled">
+          <mat-option *ngFor="let station of endStations$ | async" [value]="station?.id">
+            {{ station.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</ng-template>

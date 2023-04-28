@@ -1,0 +1,39 @@
+.cancel-icon {
+  display: flex;
+  float: right;
+}
+
+.delete-station-div {
+  display: flex;
+  float: right;
+  cursor: pointer;
+}
+
+.delete-label {
+  display: flex;
+  float: right;
+}
+
+.add-new-station {
+  color: #0084ff;
+  margin-top: 10px;
+}
+
+.delete-item {
+  margin-left: 7px;
+  span {
+    cursor: pointer;
+  }
+}
+
+.btn-closed{
+  display: flex;
+  justify-content: flex-end;
+ float: right;
+}
+
+.btn-div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}

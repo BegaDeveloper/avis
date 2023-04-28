@@ -1,0 +1,28 @@
+<app-action-dialog
+  [template]="content"
+  [title]="name"
+  [submitTitle]="'Potvrdi'"
+  [disabled]="disabled"
+  (submitted)="onSubmit()"
+  [planInstanceId]="data.id"
+></app-action-dialog>
+<ng-template #content>
+  <form [formGroup]="form">
+    <div class="input-div">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label class="label-mat">Naziv stanice:</mat-label>
+        <mat-select formControlName="station" (selectionChange)="onSelect($event)" [errorStateMatcher]="matcher">
+          <mat-option *ngFor="let station of stations$ | async" [value]="station.station.id">
+            {{ station.station.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-div">
+      <mat-form-field class="w-100 name-field" appearance="outline">
+        <mat-label class="label-mat">Kašnjenje</mat-label>
+        <input matInput formControlName="delay" [errorStateMatcher]="matcher" type="number" />
+      </mat-form-field>
+    </div>
+  </form>
+</ng-template>

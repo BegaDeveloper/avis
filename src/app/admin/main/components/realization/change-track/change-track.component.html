@@ -1,0 +1,30 @@
+<app-action-dialog
+  [template]="content"
+  [title]="name"
+  [submitTitle]="'Promeni kolosek'"
+  [disabled]="disabled"
+  (submitted)="onSubmit()"
+  [planInstanceId]="data.id"
+></app-action-dialog>
+<ng-template #content>
+  <div class="input-div">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Naziv stanice:</mat-label>
+      <mat-select
+        (selectionChange)="onSelectStation($event)"
+        [(ngModel)]="currentStationId"
+        [errorStateMatcher]="matcher"
+      >
+        <mat-option *ngFor="let station of stations$ | async" [value]="station.id">{{ station.name }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="input-div">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Kolosek:</mat-label>
+      <mat-select (selectionChange)="onSelectTrack($event)" [(ngModel)]="currentTrack" [errorStateMatcher]="matcher">
+        <mat-option *ngFor="let track of tracks" [value]="track.trackNumber">{{ track.trackNumber }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-template>

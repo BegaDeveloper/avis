@@ -1,0 +1,47 @@
+.train-location {
+  list-style-type: disc;
+  padding-left: 24px;
+
+  &.canceled {
+    opacity: .6;
+  }
+
+  li {
+    position: relative;
+    margin-bottom: 5px;
+    padding-left: 10px;
+
+    &::marker {
+      font-size: 1.5rem;
+    }
+
+    &.FIRST {
+      // color: green;
+      // font-weight: bolder;
+    }
+
+    &.LAST {
+      // color: red;
+      // font-weight: bolder;
+    }
+
+    &.TRAIN {
+      &::marker {
+        content: url("/assets/img/train2.png");
+      }
+    }
+
+    &.SHORTENED {
+      color: gray;
+      &::marker {
+        content: "*  ";
+      }
+    }
+
+    &.EMPTY {
+      &::marker {
+        //content: "";
+      }
+    }
+  }
+}

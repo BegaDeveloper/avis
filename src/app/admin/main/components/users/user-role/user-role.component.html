@@ -1,0 +1,25 @@
+<div class="user-role-dialog">
+  <h1 mat-dialog-title>{{ 'Rola za korisnika ' }} {{ data.content.username }}</h1>
+  <div class="dialog-content" mat-dialog-content>
+    <table>
+      <tbody>
+        <tr class="role-checkbox" *ngFor="let role of rolesArray">
+          <td>
+            <mat-label class="label-mat" for="check-box">{{ role.name }}: </mat-label>
+            <mat-checkbox
+              [checked]="isRole(role.value)"
+              (change)="onChecked($event, role.value)"
+              class="checkbox-special-day"
+              color="primary"
+            >
+            </mat-checkbox>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <mat-dialog-actions align="end" class="action">
+    <button mat-flat-button type="button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" (click)="onSubmit()">Snimi</button>
+  </mat-dialog-actions>
+</div>

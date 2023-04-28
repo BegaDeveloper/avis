@@ -1,0 +1,282 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$avis2-primary: mat.define-palette(mat.$indigo-palette);
+$avis2-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$avis2-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $avis2-primary,
+      accent: $avis2-accent,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($avis2-theme);
+
+@import 'styles/open-sans.scss';
+@import 'styles/material-icons.scss';
+
+// Typography
+$custom-typography: mat.define-typography-config(
+  $font-family: "'Open Sans', sans-serif",
+);
+
+@include mat.core($custom-typography);
+
+$avis-brand: (
+  50: #e1e7eb,
+  100: #b4c3cd,
+  200: #829cac,
+  300: #4f748b,
+  400: #2a5672,
+  500: #375172,
+  600: #033251,
+  700: #032b48,
+  800: #02243e,
+  900: #01172e,
+  A100: #67a2ff,
+  A200: #3482ff,
+  A400: #0163ff,
+  A700: #0059e6,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$avis-fe-primary: mat.define-palette($avis-brand);
+$avis-fe-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$avis-fe-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$avis-fe-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $avis-fe-primary,
+      accent: $avis-fe-accent,
+      warn: $avis-fe-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-colors($avis-fe-theme);
+@font-face {
+  font-family: Yupic;
+  src: url(./assets/fonts/Yupic-2016-rex2.ttf) format('opentype');
+}
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.menu-item {
+  font-size: 14px;
+  color: #7e7e7e;
+  font-weight: 500;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  // border-radius: 6px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+
+  .material-symbols-outlined {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background: #f2f2f2;
+    color: #7e7e7e;
+  }
+}
+
+.custom-dialog-container .mat-dialog-container {
+  overflow-y: hidden;
+}
+
+//Tables
+table {
+  width: 100%;
+  margin-top: 20px;
+  .menu-td {
+    width: 110px;
+    .menu-dot {
+      cursor: pointer;
+    }
+  }
+
+  .checkbox {
+    pointer-events: none;
+  }
+
+  .sort-btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    img {
+      width: 8px;
+      margin: 1px;
+    }
+  }
+}
+
+.add-station-div {
+  // margin-bottom: -1em;
+  .add {
+    margin-right: 5px;
+  }
+}
+
+.blue-snackbar {
+  background: #3f51b5;
+}
+
+.red-snackbar {
+  background: #f44336;
+}
+
+.red-snackbar-validate {
+  background: #790901;
+  white-space: pre-wrap;
+}
+
+.mat-row:hover {
+  background-color: #f2f2f2;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  display: flex;
+}
+
+.mat-tooltip.planModalTooltip {
+  font-size: 14px !important;
+}
+
+.weeklyMatSelectPanel {
+  min-width: 480px !important;
+}
+
+.routeMatSelectPanel {
+  min-width: 400px !important;
+}
+
+.table-top-area {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  .search-main .search-div input {
+    border: 1px solid rgba(0, 0, 0, 0);
+    transition: border 200ms ease-in-out;
+    &:hover {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+//Material Design overwrite
+.table-style {
+  .mat-header-cell {
+    color: #375172;
+    text-transform: uppercase;
+    // font-weight: bold;
+  }
+  .mat-cell,
+  .mat-footer-cell {
+    // color: rgba(0, 0, 0, 1);
+  }
+  .mat-header-row {
+    background-color: #e9ecef;
+    th.mat-header-cell {
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+  .mat-row:hover .mat-cell {
+    background-color: #E1F5FE;
+  }
+  .mat-row:nth-child(even){
+    background-color: #efefef;
+  }
+  .mat-row:nth-child(odd){
+    background-color: #ffffff;
+  }
+  .mat-row {
+    td.mat-cell {
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+  th.mat-header-cell,
+  td.mat-cell {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0 8px;
+  }
+
+  .cell-actions {
+    text-align: center;
+  }
+  .cell-size-actions {
+    padding: 0 !important;
+  }
+}
+
+mat-error {
+  margin-top: -20px;
+}
+
+.icons {
+  width: 24px;
+  cursor: pointer;
+}

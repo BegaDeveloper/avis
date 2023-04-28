@@ -1,0 +1,70 @@
+<div class="main-div">
+  <h1 class="main-header-text">Audio poruke</h1>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label class="label-mat">Izaberite stanicu:</mat-label>
+      <mat-select
+        [compareWith]="compareStations"
+        [(value)]="selectedStation"
+        (selectionChange)="storeSelectedStation()"
+      >
+        <mat-option *ngFor="let station of stations$ | async" [value]="station"> {{ station.name }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!---Table--->
+  <div class="mat-elevation-z8">
+    <table class="table-style" mat-table [dataSource]="audioMessageData">
+      <ng-container matColumnDef="ID" class="id-width">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="DATE">
+        <th mat-header-cell *matHeaderCellDef>{{ 'vreme emitovanja poruke' | uppercase }}</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.emittingDateFrom | date: 'HH:mm' }}
+          <br />
+          {{ element.emittingDateFrom | date: 'dd.MM.yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TRAIN">
+        <th mat-header-cell *matHeaderCellDef>BROJ VOZA</th>
+        <td mat-cell *matCellDef="let element" class="train-category">
+          {{ element.planInstanceHeader.train.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ROUTE_NAME">
+        <th mat-header-cell *matHeaderCellDef>NAZIV RUTE</th>
+        <td mat-cell *matCellDef="let element">{{ element.planInstanceHeader.routeHeader.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="TRACK">
+        <th mat-header-cell *matHeaderCellDef>KOLOSEK</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="check-div">{{ element.track }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="MESSAGE">
+        <th mat-header-cell *matHeaderCellDef>TEXT PORUKE</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="check-div">
+            {{ element.messageText }}
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="paginator">
+      <mat-paginator [length]="total" [pageSize]="pageSize" [hidePageSize]="true" [showFirstLastButtons]="true">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.welcome-div-main {
+  font-family: Arial;
+  .wel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 435px;
+    .welcome-txt {
+      line-height: 105px;
+      text-align: center;
+      .yellow {
+        font-family: Arial;
+        color: #ffbb03;
+        font-size: 55px;
+      }
+
+      .white {
+        font-family: Arial;
+        color: #ffffff;
+        font-size: 55px;
+      }
+    }
+  }
+  .blue-train {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 100px;
+    }
+  }
+}

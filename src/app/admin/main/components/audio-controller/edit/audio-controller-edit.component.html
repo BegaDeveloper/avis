@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Izmeni audio kontroler (id #{{ data.id }})</h2>
+<form [formGroup]="acForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field class="w-100" appearance="outline" floatLabel="auto">
+      <mat-label>Naziv</mat-label>
+      <input matInput type="text" formControlName="name" />
+    </mat-form-field>
+    <div class="mb-3">
+      <mat-slide-toggle formControlName="enabled" color="primary">Aktiviran</mat-slide-toggle>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close="false">Otkaži</button>
+    <button mat-raised-button type="reset" [disabled]="disabled" (click)="acForm.reset(data.content)">Reset</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="disabled">Snimi</button>
+  </mat-dialog-actions>
+</form>

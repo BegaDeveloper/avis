@@ -1,0 +1,98 @@
+<h1 mat-dialog-title>
+  {{ data ? 'Izmeni stanicu' : 'Dodaj stanicu ' }}
+</h1>
+<form [formGroup]="stationForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+      <div class="row">
+
+        <div class="col-lg-6">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label class="label-mat">Naziv tipa stanice:</mat-label>
+              <mat-select formControlName="stationType" [errorStateMatcher]="matcher">
+                <mat-option *ngFor="let station of stationsEnum" [value]="station.value">
+                  {{ station.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error
+              *ngIf="sharedService.validationMessage('stationTypeName', stationForm, isFormSubmitted)"
+              name="stationTypeName"
+            >
+              <strong>{{ 'required' | translate }}</strong>
+            </mat-error>
+        </div>
+
+        <div class="col-lg-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label class="label-mat">Eksterni id:</mat-label>
+            <input matInput appTrim formControlName="externalId" [errorStateMatcher]="matcher" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="sharedService.validationMessage('externalId', stationForm, isFormSubmitted)"
+            name="externalId"
+          >
+            <strong>{{ 'required' | translate }}</strong>
+          </mat-error>
+      </div>
+
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label class="label-mat">Ime:</mat-label>
+              <input matInput appTrim formControlName="name" [errorStateMatcher]="matcher" />
+            </mat-form-field>
+            <mat-error *ngIf="sharedService.validationMessage('name', stationForm, isFormSubmitted)" name="name">
+              <strong>{{ 'required' | translate }}</strong>
+            </mat-error>
+        </div>
+
+        <div class="col-lg-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label class="label-mat">Ime 1:</mat-label>
+            <input matInput appTrim formControlName="name1" [errorStateMatcher]="matcher" />
+          </mat-form-field>
+          <mat-error *ngIf="sharedService.validationMessage('name1', stationForm, isFormSubmitted)" name="name1">
+            <strong>{{ 'required' | translate }}</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label class="label-mat">Ime 2:</mat-label>
+              <input matInput appTrim formControlName="name2" [errorStateMatcher]="matcher" />
+            </mat-form-field>
+            <mat-error *ngIf="sharedService.validationMessage('name2', stationForm, isFormSubmitted)" name="name2">
+              <strong>{{ 'required' | translate }}</strong>
+            </mat-error>
+        </div>
+
+        <div class="col-lg-6">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label class="label-mat">Ime 3: </mat-label>
+              <input matInput appTrim formControlName="name4" [errorStateMatcher]="matcher" />
+            </mat-form-field>
+            <mat-error *ngIf="sharedService.validationMessage('name4', stationForm, isFormSubmitted)" name="name4">
+              <strong>{{ 'required' | translate }}</strong>
+            </mat-error>
+        </div>
+      </div>
+      <div class="mb-3">
+        <mat-checkbox
+          [checked]="licensed"
+          [value]="licensed"
+          color="primary"
+          formControlName="licensed"
+          id="check-box"
+        >
+        Licenca
+        </mat-checkbox>
+      </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="disabled$ | async">Snimi</button>
+  </mat-dialog-actions>
+</form>

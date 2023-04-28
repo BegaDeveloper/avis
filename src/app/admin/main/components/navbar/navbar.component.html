@@ -1,0 +1,36 @@
+<nav class="navbar mat-elevation-z4">
+  <div class="d-flex align-items-center">
+    <a class="navbar-brand" (click)="toggleSideBar()"
+      ><img src="../../../../../assets/icons/menu.svg" class="icons" alt=""
+    /></a>
+    <a [routerLink]="['/main']">
+      <img src="/assets/img/avis-logo.png" alt="logo" />
+    </a>
+  </div>
+  <div class="flex">
+    <div>
+      <img
+        src="../../../../../assets/icons/construction.svg"
+        routerLink="jobs"
+        matTooltip="Statusi poslova"
+        matTooltipPosition="below"
+        class="material-symbols-outlined job-icon icons"
+        id="construction"
+        alt=""
+      />
+    </div>
+    <div class="menu-div" [matMenuTriggerFor]="userMenu">
+      <div class="divide">|</div>
+      <div>
+        <a>{{ user?.fullName }} </a>
+      </div>
+      <div class="span-div">
+        <img src="../../../../../assets/icons/expand_more.svg" class="icons" alt="" />
+      </div>
+    </div>
+  </div>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="changePasswordDialog()">Promena loznike</button>
+    <button mat-menu-item (click)="openDialog()">Odjavi se</button>
+  </mat-menu>
+</nav>

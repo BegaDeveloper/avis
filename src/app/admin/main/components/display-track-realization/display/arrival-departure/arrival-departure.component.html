@@ -1,0 +1,88 @@
+<div [ngClass]="{ arrival: isArrivalsDisplay, departure: !isArrivalsDisplay }">
+  <div
+    class="socket-status-dot"
+    [ngClass]="{
+      green: isConnected,
+      red: !isConnected
+    }"
+  ></div>
+  <header>
+    <div class="flex-div">
+      <div class="name">
+        <div>
+          <span class="yellow-letters">{{ isArrivalsDisplay ? 'Dolazak/' : 'Polazak/' }}</span>
+          <span class="white-letters">{{ isArrivalsDisplay ? 'Arrival' : 'Departure' }}</span>
+        </div>
+        <div class="station-n">
+          <span> {{ station.name }}</span>
+        </div>
+      </div>
+      <div class="time">
+        <span>{{ time }}</span>
+      </div>
+      <div class="date">
+        <span>{{ currentDate }}</span>
+      </div>
+    </div>
+  </header>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col" class="table-name"><span class="y">Kolosek</span><br /><span class="w">Track</span></th>
+        <th scope="col" class="table-name">
+          <span class="y">{{ !isArrivalsDisplay ? 'Polazak' : 'Dolazak' }} </span><br /><span class="w">{{
+            !isArrivalsDisplay ? 'Departure' : 'Arrival'
+          }}</span>
+        </th>
+        <th scope="col" class="table-name"><span class="y">Kasnjenje</span><br /><span class="w">Delay</span></th>
+        <th scope="col" class="table-name"><span class="y">Napomena</span><br /><span class="w">Remark</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let el of data; let i = index" [ngClass]="{ even: i % 2 === 0 }">
+        <th scope="row" class="image-th">
+          <img [src]="url + '/operators/' + el.train.operator.id + '/small-logo'" class="logo" />
+        </th>
+        <td class="yupit-td">
+          <div class="yupit-div">
+            <div class="yupit-font">
+              <p>{{ el.train.trainCategory.code }}</p>
+            </div>
+          </div>
+        </td>
+        <td class="planId-td">
+          <div class="planId">
+            <p class="y-text">{{ el.train.id }}</p>
+          </div>
+        </td>
+        <td class="route-td">
+          <p>{{ el.routeHeader.name }}</p>
+        </td>
+        <td class="track-td">
+          <p>
+            {{ el.planInstanceItem.track }}
+          </p>
+        </td>
+        <td class="time-td" *ngIf="isArrivalsDisplay">
+          <p>{{ el.planInstanceItem.planTimeArrival | date: 'HH:mm' }}</p>
+        </td>
+        <td class="time-td" *ngIf="!isArrivalsDisplay">
+          <p>{{ el.planInstanceItem.planTimeDeparture | date: 'HH:mm' }}</p>
+        </td>
+        <td class="delay-td">
+          <p *ngIf="el.realizationItem">
+            {{ isArrivalsDisplay ? el.realizationItem.arrivalDelay : el.realizationItem.departureDelay }}
+          </p>
+        </td>
+        <td class="shortNotification-td">
+          <p [innerHTML]="el.realizationItem.shortNotification"></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div></div>
+</div>

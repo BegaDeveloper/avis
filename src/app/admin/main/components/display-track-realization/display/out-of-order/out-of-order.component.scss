@@ -1,0 +1,21 @@
+.out-of-order {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 485px;
+  flex-direction: column;
+  .error-text {
+    margin-bottom: 70px;
+    font-size: 55px;
+    color: #ffffff;
+    font-family: Arial;
+    text-align: center;
+  }
+  .blue-train {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 100px;
+    }
+  }
+}

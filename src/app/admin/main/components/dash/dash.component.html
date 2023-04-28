@@ -1,0 +1,33 @@
+<div class="main-wrapper">
+  <div class="side-div" [ngClass]="{ 'd-none': toggleSideBar.getToggleSideBar() }">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="side-div side-icons" [ngClass]="{ 'd-none': !toggleSideBar.getToggleSideBar() }">
+    <div>
+      <a
+        class="menu-item"
+        *ngFor="let item of menuItems$ | async; let i = index"
+        [matTooltip]="item.name"
+        matTooltipPosition="right"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+      >
+        <img
+          src="{{ item.icon }}"
+          [ngStyle]="{
+            margin: toggleSideBar.getToggleSideBar() ? '0' : '0 10px 0 0'
+          }"
+          class="icons"
+          alt=""
+        />
+      </a>
+    </div>
+  </div>
+  <div class="router home-div" [ngClass]="{ full: toggleSideBar.getToggleSideBar() }">
+    <router-outlet></router-outlet>
+    <div class="footer">
+      <ng-container *ngIf="version$ | async as version">{{ version?.version }} (build {{ version?.buildTime | date: 'YYYY-dd-MM HH:mm:ss' }})</ng-container> Copyright © Enetel Solutons
+      2023
+    </div>
+  </div>
+</div>

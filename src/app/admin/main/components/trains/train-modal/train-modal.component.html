@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>{{ data ? 'Izmeni voz' : 'Dodaj voz' }}</h1>
+<form [formGroup]="trainForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field class="w-100" appearance="outline">
+    <mat-label class="label-mat">Id:</mat-label>
+      <input matInput appTrim formControlName="id" [errorStateMatcher]="matcher" />
+    </mat-form-field>
+    <mat-error *ngIf="sharedService.validationMessage('id', trainForm, isFormSubmitted)" name="id">
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label class="label-mat">Operator:</mat-label>
+      <mat-select formControlName="operatorId" [errorStateMatcher]="matcher">
+        <mat-option *ngFor="let operator of operators$ | async" [value]="operator.id">
+          {{ operator.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-error
+      *ngIf="sharedService.validationMessage('operatorId', trainForm, isFormSubmitted)"
+      name="operatorId"
+    >
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label class="label-mat">Kategorija:</mat-label>
+      <mat-select formControlName="categoryId" [errorStateMatcher]="matcher">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-error
+      *ngIf="sharedService.validationMessage('categoryId', trainForm, isFormSubmitted)"
+      name="categoryId"
+    >
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+    <mat-form-field class="w-100" appearance="outline">
+    <mat-label class="label-mat ">Naziv voza:</mat-label>
+      <input matInput appTrim formControlName="name"/>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="disabled$ | async" >Snimi</button>
+  </mat-dialog-actions>
+</form>

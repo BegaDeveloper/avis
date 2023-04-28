@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Želite li duplirati plan?</h1>
+<mat-dialog-content>
+  <div><strong>ID:</strong> {{ data.data.id }}</div>
+  <div><strong>Interval:</strong> {{ this.data.data.planInterval.name }}</div>
+  <div><strong>Ruta:</strong> {{ this.data.data.route.name }}</div>
+  <div><strong>Voz ID:</strong> {{ this.data.data.trainId }}</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="closeModal()">Otkaži</button>
+  <button mat-flat-button color="primary" (click)="duplicate()">Dupliraj plan</button>
+</mat-dialog-actions>

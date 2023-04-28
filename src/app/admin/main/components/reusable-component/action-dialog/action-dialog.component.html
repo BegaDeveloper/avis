@@ -1,0 +1,28 @@
+<ng-container *ngIf="realizationDetails$ | async as realizationDetails">
+  <h2 mat-dialog-title>
+    {{ title }} {{ realizationDetails.realizationHeader.train.id }}
+    {{ realizationDetails.realizationHeader.route.name }}
+  </h2>
+  <ul>
+    <li>ID plan instance: {{ realizationDetails.realizationHeader.id }}</li>
+    <li>Kategorija voza: {{ realizationDetails.realizationHeader.train.trainCategory.name }}</li>
+  </ul>
+  <hr />
+  <mat-dialog-content>
+    <div>
+      <div>
+        <app-train-location [realizationDetailsItems]="realizationDetails.realizationDetailsItems"></app-train-location>
+      </div>
+      <div>
+        <ng-container *ngTemplateOutlet="template"></ng-container>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close="false">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="disabled" (click)="submit()">
+      <img *ngIf="disabled" class="spinner-button" src="/assets/img/spinner.gif" alt="spinner" />
+      {{ submitTitle }}
+    </button>
+  </mat-dialog-actions>
+</ng-container>

@@ -1,0 +1,54 @@
+.user-role-dialog {
+  overflow: hidden;
+
+  .dialog-content {
+    margin-left: 5%;
+    font-size: 15px;
+    padding-bottom: 30px;
+    margin-top: 40px;
+  }
+
+  .action-modal {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    margin-top: 5px;
+  }
+
+  .second-div {
+    margin-left: 15px;
+  }
+
+  .checkbox-div {
+    margin-top: 15px;
+  }
+}
+
+.action {
+  margin: 10px;
+}
+
+.ten-chechboxes-group {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.inpt-div {
+  margin-right: 35px;
+}
+
+.cancel-icon {
+  display: flex;
+  float: right;
+}
+
+.label-mat {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.role-checkbox {
+  display: inline;
+  margin-right: 15%;
+  width: 100%;
+}

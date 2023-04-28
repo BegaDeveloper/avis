@@ -1,0 +1,24 @@
+.station-div {
+  display: flex;
+
+  flex-wrap: wrap;
+  div {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+  }
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  width: 70px;
+}
+
+.cell-size-actions {
+  width: 120px;
+}
+
+#route_name {
+  min-width: 100px;
+}

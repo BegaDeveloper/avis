@@ -1,0 +1,28 @@
+<div class="login-bg">
+  <mat-card class="mat-card">
+    <div class="logo">
+      <img src="/assets/img/login_logo.png" alt="logo">
+    </div>
+    <div class="header-div">
+      <h3>Prijavi se</h3>
+    </div>
+    <div class="form-div">
+      <form #authForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Korisničko ime</mat-label>
+          <input matInput type="text" name="username" placeholder="Unesite korisničko ime" ngModel required>
+          <img src="../../../../../assets/icons/person.svg" class="icons" alt=""/>
+
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Šifra</mat-label>
+          <input matInput type="password" name="password" placeholder="Unesite šifru" ngModel required>
+          <img src="../../../../../assets/icons/lock.svg" class="icons" alt=""/>
+        </mat-form-field>
+        <div class="btn-div">
+          <button mat-raised-button color="primary" type="submit">Prijavi se</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

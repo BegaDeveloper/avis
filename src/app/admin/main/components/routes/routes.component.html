@@ -1,0 +1,86 @@
+<div class="main-div">
+  <h1 class="main-header-text">Rute</h1>
+
+  <!---Table--->
+  <div class="mat-elevation-z8">
+    <div class="flex table-top-area">
+      <div>
+        <app-search></app-search>
+      </div>
+      <div class="add-station-div">
+        <button mat-raised-button color="primary" (click)="openModal()">
+          <img src="/assets/icons/add.svg" class="icons" alt="" />
+          Kreiraj rutu
+        </button>
+      </div>
+    </div>
+    <!---Table--->
+    <table class="mt-0 table-style" mat-table [dataSource]="data" matSort>
+      <ng-container matColumnDef="ID" class="id-width">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="id">
+          ID
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NAME">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="name" id="route_name">
+          NAZIV RUTE
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="STATION">
+        <th mat-header-cell *matHeaderCellDef>STANICE</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="station-div">
+            <div>
+              {{ returnStations(element.routeItems) }}
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ACTION">
+        <th mat-header-cell *matHeaderCellDef class="text-center p-0">AKCIJA</th>
+        <td mat-cell *matCellDef="let element" class="cell-size-actions">
+          <div class="cell-actions">
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/edit.svg"
+                class="icons"
+                alt=""
+                matTooltip="Ažuriraj"
+                [matTooltipPosition]="'above'"
+                (click)="getById(element.id)"
+              />
+            </button>
+            <button mat-icon-button color="primary">
+              <img
+                src="/assets/icons/delete.svg"
+                class="icons"
+                alt=""
+                matTooltip="Obriši"
+                [matTooltipPosition]="'above'"
+                (click)="deleteDialog(element)"
+              />
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="paginator">
+      <mat-paginator
+        [length]="total"
+        [pageSize]="10"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

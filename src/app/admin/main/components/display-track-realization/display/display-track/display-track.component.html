@@ -1,0 +1,76 @@
+<div class="main-time-div">
+  <div
+    id="indicator"
+    [className]="indicator$ | async"
+  ></div>
+<ng-container [ngSwitch]="activeTrackStatus">
+  <!---Station display data-->
+  <ng-container *ngSwitchCase="trackStatus.DISPLAY">
+    <div class="row m-0" [ngStyle]="{ 'justify-content': !data?.stationRealizationItem ? 'flex-end' : 'center' }">
+      <div class="col-md-4 logo">
+        <img [src]="logoUrl" class="operator-image" alt="" />
+      </div>
+      <div class="col-md-4 time">
+        <span>{{ currentTime }}</span>
+      </div>
+      <div class="col-md-4 date">
+        <span>{{ currentDate | date: 'dd.MM.yyyy' }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="data?.stationRealizationItem">
+      <div class="category">
+        <div>
+          <p class="yupit-font">{{ data?.stationRealizationItem?.train?.trainCategory?.code }}</p>
+        </div>
+        <div class="train-id">
+          <p>{{ data?.stationRealizationItem?.train?.id }}</p>
+        </div>
+      </div>
+      <div class="route-div">
+        <div class="grey">
+          <p>{{ data?.stationRealizationItem?.routeHeader?.name }}</p>
+        </div>
+      </div>
+      <div
+        class="arrival-departure-div"
+        [ngStyle]="{
+          'justify-content':
+            !data?.stationRealizationItem?.planInstanceItem?.planTimeArrival ||
+            !data?.stationRealizationItem?.planInstanceItem?.planTimeDeparture
+              ? 'space-evenly'
+              : 'space-around'
+        }"
+      >
+        <div class="departure" *ngIf="data?.stationRealizationItem?.planInstanceItem?.planTimeArrival">
+          <div>
+            <p>dolazak<br /><span class="white">arrival</span></p>
+          </div>
+          <div class="time">
+            <p>{{ data?.stationRealizationItem?.planInstanceItem?.planTimeArrival | date: 'HH:mm' }}</p>
+          </div>
+        </div>
+        <div class="departure" *ngIf="data?.stationRealizationItem?.planInstanceItem?.planTimeDeparture">
+          <div>
+            <p>polazak<br /><span class="white">departure</span></p>
+          </div>
+          <div class="time">
+            <p>{{ data?.stationRealizationItem?.planInstanceItem?.planTimeDeparture | date: 'HH:mm' }}</p>
+          </div>
+        </div>
+        <div class="arrival">
+          <div>
+            <p>kašnjenje<br /><span class="white"> delay</span></p>
+          </div>
+          <div class="time">
+            <p>{{ delay() }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <!---Welcome section-->
+  <app-welcome *ngSwitchCase="trackStatus.WELCOME" [station]="data?.station"> </app-welcome>
+  <!---Out of order--->
+  <app-out-of-order *ngSwitchCase="trackStatus.OUT_OF_ORDER"></app-out-of-order>
+</ng-container>
+</div>

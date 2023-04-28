@@ -1,0 +1,7 @@
+<app-action-dialog
+  [title]="name"
+  [submitTitle]="isReset ? 'Potvrdi resetovanje' : 'Potvrdi otkazivanje'"
+  [disabled]="disabled"
+  (submitted)="onSubmit()"
+  [planInstanceId]="data.id"
+></app-action-dialog>

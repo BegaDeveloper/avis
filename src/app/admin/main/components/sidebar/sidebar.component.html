@@ -1,0 +1,13 @@
+<div class="py-3">
+  <a
+    class="menu-item"
+    *ngFor="let item of menuItems$ | async; let i = index"
+    [routerLink]="item.path"
+    routerLinkActive="active"
+  >
+    <img src="{{ item.icon }}" class="icons" alt="" />
+    <span style="margin-left: 15px">
+      {{ item.name }}
+    </span>
+  </a>
+</div>

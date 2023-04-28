@@ -1,0 +1,152 @@
+<div class="main-div">
+  <h1 class="main-header-text">Planovi</h1>
+
+  <!---Table--->
+  <div class="mat-elevation-z8">
+    <div class="flex table-top-area">
+      <div>
+        <app-search></app-search>
+      </div>
+      <div class="add-station-div">
+        <button mat-flat-button class="btn-upload-plan">
+          <label for="formFile">
+            <img src="/assets/icons/upload.svg" class="icons upload-icon" alt="" />
+            Učitaj plan</label
+          >
+          <input (change)="this.onFilechange($event)" type="file" id="formFile" style="display: none" />
+        </button>
+
+        <button mat-raised-button color="primary" (click)="openDialog()" class="ml-3">
+          <img src="/assets/icons/add.svg" class="icons" alt="" /> Kreiraj plan
+        </button>
+      </div>
+    </div>
+
+    <!---Table--->
+    <table class="mt-0 table-style" mat-table [dataSource]="data" matSort>
+      <ng-container matColumnDef="ID_PLAN">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="id">
+          ID
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="NAME_INT_PLAN">
+        <th mat-header-cell *matHeaderCellDef>NAZIV INTERVALA</th>
+        <td mat-cell *matCellDef="let element">{{ element.planInterval.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="NAME_WEEK">
+        <th mat-header-cell *matHeaderCellDef>NEDELJNI RASPORED</th>
+        <td mat-cell *matCellDef="let element">{{ element?.weekSchedule?.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ROUTE">
+        <th mat-header-cell *matHeaderCellDef>NAZIV RUTE</th>
+        <td mat-cell *matCellDef="let element">{{ element.route.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="TRAIN_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="trainId" id="train_id">
+          ID VOZA
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.trainId }}</td>
+      </ng-container>
+      <ng-container matColumnDef="DATE">
+        <th mat-header-cell *matHeaderCellDef style="width: 168px">DATUM OGRANIČENJA</th>
+        <td mat-cell *matCellDef="let element">{{ element.cutDate | date: 'dd.MM.yyyy.' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="ACTIVE">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="active" id="active_id">
+          AKTIVIRAN
+        </th>
+        <td class="cell-active" mat-cell *matCellDef="let element">
+          <div class="text-center">
+            <mat-checkbox class="checkbox-active" color="primary" [checked]="element.active"></mat-checkbox>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="AKCIJA">
+        <th mat-header-cell *matHeaderCellDef class="text-center p-0">AKCIJA</th>
+        <td mat-cell *matCellDef="let element" class="cell-size-actions">
+          <div class="cell-actions">
+            <button mat-icon-button color="primary" (click)="openDetail(element.id)">
+              <img
+                src="/assets/icons/details.svg"
+                matTooltip="Detalji plana"
+                [matTooltipPosition]="'above'"
+                class="icons"
+                alt=""
+              />
+            </button>
+            <button mat-icon-button color="primary" (click)="openDuplicateModal(element)">
+              <img
+                src="/assets/icons/copy.svg"
+                matTooltip="Dupliranje plana"
+                [matTooltipPosition]="'above'"
+                alt=""
+                class="icons"
+              />
+            </button>
+            <button mat-icon-button color="primary" (click)="openCutModal(element)" [disabled]="!isCutEnabled(element)">
+              <img
+                src="/assets/icons/plan_cal.svg"
+                matTooltip="Ograničenje plana"
+                [matTooltipPosition]="'above'"
+                alt=""
+                class="icons"
+                [ngStyle]="{ opacity: !isCutEnabled(element) ? '0.4' : '1' }"
+              />
+            </button>
+            <button mat-icon-button color="primary" [disabled]="element.active" (click)="putData(element.id)">
+              <img
+                src="/assets/icons/edit.svg"
+                matTooltip="Izmena plana"
+                [matTooltipPosition]="'above'"
+                class="icons"
+                alt=""
+                [ngStyle]="{ opacity: element.active ? '0.4' : '1' }"
+              />
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="openActivate(element.id)"
+              [disabled]="!isActivationEnabled(element)"
+            >
+              <img
+                src="/assets/icons/verified.svg"
+                [matTooltip]="!element.active ? 'Aktivacija plana' : 'Plan aktiviran'"
+                [matTooltipPosition]="'above'"
+                class="icons"
+                alt=""
+                [ngStyle]="{ opacity: !isActivationEnabled(element) ? '0.4' : '1' }"
+              />
+            </button>
+            <button mat-icon-button color="primary" [disabled]="element.active">
+              <img
+                src="/assets/icons/delete.svg"
+                matTooltip="Brisanje plana"
+                [matTooltipPosition]="'above'"
+                (click)="deleteDialog(element)"
+                class="icons"
+                alt=""
+                [ngStyle]="{ opacity: element.active ? '0.4' : '1' }"
+              />
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="paginator">
+      <mat-paginator
+        [length]="total"
+        [pageSize]="10"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<h1 mat-dialog-title>{{ data ? 'Izmeni specijalni dan' : 'Dodaj specijalni dan' }}</h1>
+<form [formGroup]="specialDayForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Dan:</mat-label>
+          <input
+            appTrim
+            matInput
+            type="number"
+            formControlName="day"
+            [pattern]="onlyIntegerWithEndDotPattern"
+            [errorStateMatcher]="matcher"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('day', specialDayForm, isFormSubmitted)">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+      <div class="col-lg-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Mesec:</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="month"
+            [pattern]="onlyIntegerWithEndDotPattern"
+            [errorStateMatcher]="matcher"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('month', specialDayForm, isFormSubmitted)">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Početna godina:</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="startYear"
+            [pattern]="onlyIntegerWithEndDotPattern"
+            [errorStateMatcher]="matcher"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('startYear', specialDayForm, isFormSubmitted)">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+      <div class="col-lg-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="label-mat">Poslednja godina:</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="endYear"
+            [pattern]="onlyIntegerWithEndDotPattern"
+            [errorStateMatcher]="matcher"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="sharedService.validationMessage('endYear', specialDayForm, isFormSubmitted)">
+          <strong>{{ 'required' | translate }}</strong>
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <mat-checkbox
+        [checked]="allYears"
+        [value]="allYears"
+        (change)="onChecked($event)"
+        class="checkbox-special-day"
+        color="primary"
+        id="check-box"
+      >
+      Sve godine
+      </mat-checkbox>
+    </div>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label class="label-mat">Naziv:</mat-label>
+      <input appTrim matInput formControlName="name" [errorStateMatcher]="matcher" />
+    </mat-form-field>
+    <mat-error *ngIf="sharedService.validationMessage('name', specialDayForm, isFormSubmitted)">
+      <strong>{{ 'required' | translate }}</strong>
+    </mat-error>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="closeModal()">Otkaži</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="disabled$ | async">Snimi</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,19 @@
+<ul class="train-location" [ngClass]="{ canceled: canceled }">
+  <ng-container *ngFor="let trainLocation of trainLocations">
+    <li [className]="trainLocation.status + ' ' + trainLocation.style">
+      {{ trainLocation.station?.name }}
+      <ng-container *ngIf="trainLocation.arrival"
+        >{{ trainLocation.arrival | date : 'HH:mm'
+        }}<ng-container *ngIf="trainLocation.arrivalDelay"
+          >({{ trainLocation.arrivalDelay }})
+        </ng-container></ng-container
+      >
+      <ng-container *ngIf="trainLocation.departure"
+        >{{ trainLocation.departure | date : 'HH:mm'
+        }}<ng-container *ngIf="trainLocation.departureDelay"
+          >({{ trainLocation.departureDelay }})</ng-container
+        ></ng-container
+      >
+    </li>
+  </ng-container>
+</ul>

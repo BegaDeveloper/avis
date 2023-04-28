@@ -1,0 +1,29 @@
+.inpt-div {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.inpt-name,
+.inpt-specialDay {
+  width: 325px;
+}
+
+.mar {
+  margin: 20px 0;
+}
+
+.header-txt {
+  font-size: 24px;
+}
+
+.action-modal {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  margin-top: 15px;
+}
+
+.special-days-mat-select {
+  margin-top: 20px;
+}

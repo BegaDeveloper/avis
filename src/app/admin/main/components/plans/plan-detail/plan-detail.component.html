@@ -1,0 +1,83 @@
+<h1 mat-dialog-title>{{ 'Plan ID' }} {{ data.id }} - {{ data.content.route.name }}</h1>
+<div class="row">
+  <div class="col">
+    <strong>{{ 'Naziv intervala: ' }}</strong>
+    <br />
+    {{ data.content.planInterval.name }}
+  </div>
+  <div class="col">
+    <strong>{{ 'Nedeljni raspored: ' }}</strong>
+    <br />
+    {{ data.content.weekSchedule?.name }}
+  </div>
+  <div class="col">
+    <strong>{{ 'ID voza: ' }}</strong>
+    <br />
+    {{ data.content.train.id }}
+  </div>
+  <div class="col">
+    <strong>{{ 'Aktiviran: ' }}</strong>
+    <br />
+    {{ data.content.active ? 'Da' : 'Ne' }}
+  </div>
+</div>
+<mat-dialog-content>
+  <table mat-table [dataSource]="this.data.content.planItems" class="border mb-3 table-style">
+    <div>
+      <ng-container matColumnDef="ID STAVKE PLANA">
+        <th mat-header-cell *matHeaderCellDef>ID STAVKE PLANA</th>
+        <td mat-cell *matCellDef="let station; index as i">
+          {{ station.id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="STANICE">
+        <th mat-header-cell *matHeaderCellDef>STANICE</th>
+        <td mat-cell *matCellDef="let station; index as i">
+          {{ station.routeItem.station.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="VREME DOLASKA">
+        <th mat-header-cell *matHeaderCellDef>VREME DOLASKA</th>
+        <td mat-cell *matCellDef="let station; index as i">
+          {{returnTime(station.timeArrival)}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="VREME POLASKA">
+        <th mat-header-cell *matHeaderCellDef>VREME POLASKA</th>
+        <td mat-cell *matCellDef="let station; index as i">
+          {{ returnTime(station.timeDeparture) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="TRANZIT">
+        <th class="text-center" mat-header-cell *matHeaderCellDef>TRANZIT</th>
+        <td class="text-center" mat-cell *matCellDef="let station; index as i">
+          <mat-checkbox class="checkbox-content" color="primary" [checked]="station.transit"> </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="KOLOSEK">
+        <th mat-header-cell *matHeaderCellDef>KOLOSEK</th>
+        <td mat-cell *matCellDef="let station; index as i">
+          {{ station.track }}
+        </td>
+      </ng-container>
+    </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="closeModal()">Otkaži</button>
+  <button *ngIf="isActivationEnabled" mat-flat-button [disabled]="activation" (click)="validatePlan()" class="validate-btn">
+    Validiraj
+  </button>
+  <button
+    *ngIf="isActivationEnabled"
+    [disabled]="activation"
+    mat-flat-button
+    color="primary"
+    (click)="activatePlan()"
+    class="active-btn"
+  >
+    Aktiviraj
+  </button>
+</mat-dialog-actions>

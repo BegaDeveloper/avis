@@ -1,0 +1,17 @@
+<div class="search-main">
+  <mat-icon class="icon-div">search</mat-icon>
+  <div class="search-div">
+    <input
+      #search
+      type="text"
+      class="search-input search"
+      placeholder="Pretraži... "
+      appDelayedInput
+      [delayTime]="600"
+      (delayedInput)="send($event)"
+    />
+    <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Poništi" (click)="clear(search)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
